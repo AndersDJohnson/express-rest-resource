@@ -5,7 +5,9 @@ var bodyParser = require('body-parser')
 module.exports = function (options) {
 
   var router = express.Router();
+
   router.use(bodyParser.json());
+
 
   var resource = new Resource(options);
 
@@ -46,14 +48,32 @@ Resource.routes = {
   'delete': { method: 'delete', path: '/:id' },
 };
 
+
+Resource.prototype.unsupportedMediaType = function (req, res) {
+  if (! req.is('json')) {
+    res.status(415).end();
+    return true;
+  }
+};
+
+Resource.prototype.unaccepable = function (req, res) {
+  if (! req.accepts('json')) {
+    res.status(406).end();
+    return true;
+  }
+};
+
+
 Resource.prototype.list = function () {
   var that = this;
 
   return function (req, res, next) {
+    if (that.unaccepable(req, res)) return;
+
     that.options.db().find({}, function (err, docs) {
       if (err) {
         that.options.error(err);
-        return res.status(500);
+        return res.status(500).end();
       }
       res.json(docs);
     });
@@ -64,12 +84,14 @@ Resource.prototype.get = function () {
   var that = this;
   
   return function (req, res, next) {
+    if (that.unaccepable(req, res)) return;
+
     var id = req.params.id;
 
     that.options.db().findOne({_id: id}, function (err, doc) {
       if (err) {
         that.options.error(err);
-        return res.status(500);
+        return res.status(500).end();
       }
       if (! doc) {
         res.status(404).end();
@@ -84,12 +106,15 @@ Resource.prototype.post = function () {
   var that = this;
   
   return function (req, res, next) {
+    if (that.unsupportedMediaType(req, res)) return;
+    if (that.unaccepable(req, res)) return;
+
     var doc = req.body;
 
     that.options.db().insert(doc, function (err, newDoc) {
       if (err) {
         that.options.error(err);
-        return res.status(500);
+        return res.status(500).end();
       }
       res.status(201).json(newDoc);
     });
@@ -100,17 +125,26 @@ Resource.prototype.put = function () {
   var that = this;
   
   return function (req, res, next) {
+    if (that.unsupportedMediaType(req, res)) return;
+    if (that.unaccepable(req, res)) return;
+
     var id = req.params.id;
     var doc = req.body;
 
-    that.options.db().update({_id: id}, doc, {upsert: true}, function (err, count) {
+    var query = {
+      _id: id
+    };
+    var options = {};
+
+    that.options.db().update(query, doc, options, function (err, numReplaced) {
       if (err) {
         that.options.error(err);
-        return res.status(500);
+        return res.status(500).end();
       }
-      res.json({
-        count: count
-      });
+      if (numReplaced === 0) {
+        return res.status(404).end();
+      }
+      res.status(204).end();
     });
   };
 };
@@ -121,14 +155,20 @@ Resource.prototype.delete = function () {
   return function (req, res, next) {
     var id = req.params.id;
 
-    that.options.db().remove({_id: id}, {}, function (err, count) {
+    var query = {
+      _id: id
+    };
+    var options = {};
+
+    that.options.db().remove(query, options, function (err, numRemoved) {
       if (err) {
         that.options.error(err);
-        return res.status(500);
+        return res.status(500).end();
       }
-      res.json({
-        count: count
-      });
+      if (numRemoved === 0) {
+        return res.status(404).end();
+      }
+      res.status(204).end();
     });
   };
 };
