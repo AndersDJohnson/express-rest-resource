@@ -1,6 +1,8 @@
 # express-rest-resource
 
-An [express] 4+ `Router` representing a RESTful resource. BYODB - Bring your own database! (see [database dependency](#database-dependency)).
+An [express] 4+ `Router` representing a RESTful resource as JSON.
+
+BYODB - Bring your own database! (see [database dependency](#database-dependency)).
 
 Originally written to help get prototype apps running anywhere quickly and hassle-free - a main reason why support for [nedb]'s in-memory or file-based databases was built-in.
 
