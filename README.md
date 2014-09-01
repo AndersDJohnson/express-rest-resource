@@ -6,8 +6,8 @@ Originally written to help get prototype apps running anywhere quickly and hassl
 
 Provides standard RESTful routes, mapping to database calls:
 
-    GET     /       ->  find
-    GET     /:id    ->  find one
+    GET     /       ->  list all
+    GET     /:id    ->  read one
     POST    /       ->  insert
     PUT     /:id    ->  update
     DELETE  /:id    ->  remove
