@@ -1,2 +1,2 @@
-# express-rest-api
+# express-rest-resource
 
