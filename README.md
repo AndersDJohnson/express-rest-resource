@@ -15,7 +15,7 @@ Provides standard RESTful routes, mapping to database calls:
     DELETE  /:id    ->  remove
 
 This router can be mounted at any path in your [express] app.
-Routes behave RESTfully - responding with meaningfull HTTP status codes, validating accepts and content types, etc.
+Routes behave RESTfully - responding with meaningful HTTP status codes, validating accepts and content types, etc.
 
 ## Database dependency
 For modularity, a database implementation is not built-in.
