@@ -8,6 +8,10 @@
   },
   "author": "Anders D. Johnson",
   "license": "MIT",
+  "repository": {
+    "type" : "git",
+    "url" : "http://github.com/AndersDJohnson/express-rest-resource.git"
+  },
   "dependencies": {
     "express": "^4.0.0",
     "body-parser": "^1.6.7"
