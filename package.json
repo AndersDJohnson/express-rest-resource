@@ -1,7 +1,7 @@
 {
   "name": "express-rest-resource",
   "version": "0.0.0",
-  "description": "",
+  "description": "RESTful routes for JSON resources, BYODB",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
