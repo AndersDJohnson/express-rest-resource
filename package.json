@@ -9,7 +9,7 @@
   "author": "Anders D. Johnson",
   "license": "MIT",
   "dependencies": {
-    "express": "^4.8.7",
+    "express": "^4.0.0",
     "body-parser": "^1.6.7"
   }
 }
