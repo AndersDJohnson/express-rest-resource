@@ -56,7 +56,7 @@ Resource.prototype.unsupportedMediaType = function (req, res) {
   }
 };
 
-Resource.prototype.unaccepable = function (req, res) {
+Resource.prototype.unacceptable = function (req, res) {
   if (! req.accepts('json')) {
     res.status(406).end();
     return true;
@@ -68,7 +68,7 @@ Resource.prototype.list = function () {
   var that = this;
 
   return function (req, res, next) {
-    if (that.unaccepable(req, res)) return;
+    if (that.unacceptable(req, res)) return;
 
     that.options.db().find({}, function (err, docs) {
       if (err) {
@@ -84,7 +84,7 @@ Resource.prototype.get = function () {
   var that = this;
   
   return function (req, res, next) {
-    if (that.unaccepable(req, res)) return;
+    if (that.unacceptable(req, res)) return;
 
     var id = req.params.id;
 
@@ -107,7 +107,7 @@ Resource.prototype.post = function () {
   
   return function (req, res, next) {
     if (that.unsupportedMediaType(req, res)) return;
-    if (that.unaccepable(req, res)) return;
+    if (that.unacceptable(req, res)) return;
 
     var doc = req.body;
 
@@ -126,7 +126,7 @@ Resource.prototype.put = function () {
   
   return function (req, res, next) {
     if (that.unsupportedMediaType(req, res)) return;
-    if (that.unaccepable(req, res)) return;
+    if (that.unacceptable(req, res)) return;
 
     var id = req.params.id;
     var doc = req.body;
