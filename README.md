@@ -23,6 +23,12 @@ Instead, a database (or collection) must be injected as a dependency.
 Expects the injected database to implement a subset of the [MongoDB] API.
 Supported databases include: [nedb], [MongoDB].
 
+## Install
+
+```console
+npm add express-rest-resource
+```
+
 ## Examples
 
 ```js
